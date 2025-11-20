@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class InventoryManagementSystem {
 
-	private static final String DB_FILE = "Company.db";
+	private static final String DB_FILE = "company.db";
 	private static Connection connection = null;
 	private static PreparedStatement stmt = null;
 	private static ResultSet rs = null;
@@ -184,13 +184,13 @@ public class InventoryManagementSystem {
 					String sql = "UPDATE Drone SET Model = ?, WarehouseAddress = ?, ShipmentID = ?, Location = ?, Status = ?, Year = ? WHERE SerialNumber = ?";
 					
 					stmt = getConnection().prepareStatement(sql);
-					stmt.setString(1, serialToEdit);
-					stmt.setString(2, updateModel);
-					stmt.setString(3, updateWarehouseAddress);
-					stmt.setString(4, updateShipmentId);
-					stmt.setString(5, updateLocation);
-					stmt.setString(6, updateStatus);
-					stmt.setString(7, updateYear);
+					stmt.setString(1, updateModel);
+					stmt.setString(2, updateWarehouseAddress);
+					stmt.setString(3, updateShipmentId);
+					stmt.setString(4, updateLocation);
+					stmt.setString(5, updateStatus);
+					stmt.setString(6, updateYear);
+					stmt.setString(7, serialToEdit); 
 				
 
 					stmt.executeUpdate();
