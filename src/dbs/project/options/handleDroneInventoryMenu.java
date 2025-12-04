@@ -44,9 +44,8 @@ public class handleDroneInventoryMenu {
 			
 			switch(choice) {
 			case 1:
-				try{
-				
 				// Add new drone
+				try{
 				System.out.print("Enter serial number: ");
 				String serial = myObj.nextLine().trim();
 				
@@ -62,10 +61,10 @@ public class handleDroneInventoryMenu {
 				System.out.print("Enter Location: ");
 				String location = myObj.nextLine().trim();
 
-				System.out.print("Enter Status: ");
+				System.out.print("Enter Status(Available, InUse): ");
 				String status = myObj.nextLine().trim();
 
-				System.out.print("Enter Year:");
+				System.out.print("Enter Year(YYYY):");
 				String year = myObj.nextLine().trim();
 
 				String sql = "INSERT INTO Drone (SerialNumber, Model, WarehouseAddress, ShipmentID, Location, Status, Year) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -110,22 +109,22 @@ public class handleDroneInventoryMenu {
 					rs.close();
 					stmt.close();
 
-					System.out.print("Enter model: ");
+					System.out.print("Enter new model: ");
 					String updateModel = myObj.nextLine().trim();
 					
-					System.out.print("Enter warehouse address: ");
+					System.out.print("Enter new warehouse address: ");
 					String updateWarehouseAddress = myObj.nextLine().trim();
 					
-					System.out.print("Enter shipment Id:");
+					System.out.print("Enter new shipment Id:");
 					String updateShipmentId = myObj.nextLine().trim();
 					
-					System.out.print("Enter Location: ");
+					System.out.print("Enter new Location: ");
 					String updateLocation = myObj.nextLine().trim();
 
-					System.out.print("Enter Status: ");
+					System.out.print("Enter new Status(Available, InUse): ");
 					String updateStatus = myObj.nextLine().trim();
 
-					System.out.print("Enter Year:");
+					System.out.print("Enter new Year(YYYY):");
 					String updateYear = myObj.nextLine().trim();
 
 					String sql = "UPDATE Drone SET Model = ?, WarehouseAddress = ?, ShipmentID = ?, Location = ?, Status = ?, Year = ? WHERE SerialNumber = ?";

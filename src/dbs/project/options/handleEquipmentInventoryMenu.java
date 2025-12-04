@@ -52,10 +52,11 @@ public class handleEquipmentInventoryMenu {
 						System.out.print("Enter location: ");
 						String location = myObj.nextLine().trim();
 
-						System.out.print("Enter year: ");
+						System.out.print("Enter year(YYYY): ");
 						String year = myObj.nextLine().trim();
 
-						System.out.print("Enter status: ");
+						System.out.print("Enter status(Available, Rented, InTransit): ");
+													
 						String status = myObj.nextLine().trim();
 
 						System.out.print("Enter warranty expiration (YYYY-MM-DD): ");
@@ -111,10 +112,10 @@ public class handleEquipmentInventoryMenu {
 						System.out.print("Enter new location: ");
 						String newLocation = myObj.nextLine().trim();
 
-						System.out.print("Enter new year: ");
+						System.out.print("Enter new year(YYYY): ");
 						String newYear = myObj.nextLine().trim();
 
-						System.out.print("Enter new status: ");
+						System.out.print("Enter new status(Available, Rented, InTransit): ");
 						String newStatus = myObj.nextLine().trim();
 
 						System.out.print("Enter new warranty expiration (YYYY-MM-DD): ");
@@ -231,6 +232,7 @@ public class handleEquipmentInventoryMenu {
 					}
 					break;
 				case 6:
+					// Back to Main Menu
 					System.out.println("Returning to main menu...");
 					break;
 				default:

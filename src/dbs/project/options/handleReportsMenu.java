@@ -74,7 +74,7 @@ public class handleReportsMenu {
 			System.out.print("Enter Member ID to checkouts for: ");
 			String memberId = myObj.nextLine().trim();
 
-			String sql = "SELECT COUNT(EquipmentSN) AS TotalRentedItems FROM Rental WHERE CustomerID = ?";
+			String sql = "SELECT COUNT(EquipmentSerialNumber) AS TotalRentedItems FROM Rental WHERE CustomerID = ?";
 
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, Integer.parseInt(memberId));
@@ -106,13 +106,13 @@ public class handleReportsMenu {
 	 */
 	public static void popularItem(Connection connection) {
 		try {
-			String sql = "SELECT R.EquipmentSN, EM.Model, EM.Description, " +
-						"SUM(JULIANDAY(R.DueDate) - JULIANDAY(R.Checkout)) AS TotalRentalDays, " +
-						"COUNT(R.EquipmentSN) AS NumTimesRented, " +
-						"(SUM(JULIANDAY(R.DueDate) - JULIANDAY(R.Checkout)) * COUNT(R.EquipmentSN)) AS PopularityScore " +
+			String sql = "SELECT R.EquipmentSerialNumber, EM.Model, EM.Description, " +
+						"SUM(JULIANDAY(R.ExpectedReturnDate) - JULIANDAY(R.CheckoutDate)) AS TotalRentalDays, " +
+						"COUNT(R.EquipmentSerialNumber) AS NumTimesRented, " +
+						"(SUM(JULIANDAY(R.ExpectedReturnDate) - JULIANDAY(R.CheckoutDate)) * COUNT(R.EquipmentSerialNumber)) AS PopularityScore " +
 						"FROM Rental R, Equipment E, EquipmentModel EM " +
-						"WHERE R.EquipmentSN = E.SerialNumber AND E.Model = EM.Model " +
-						"GROUP BY R.EquipmentSN, EM.Model, EM.Description " +
+						"WHERE R.EquipmentSerialNumber = E.SerialNumber AND E.Model = EM.Model " +
+						"GROUP BY R.EquipmentSerialNumber, EM.Model, EM.Description " +
 						"ORDER BY PopularityScore DESC, NumTimesRented DESC " +
 						"LIMIT 1";
 
@@ -122,7 +122,7 @@ public class handleReportsMenu {
 			System.out.println("\n--- Most Popular Item Report ---");
 			if (rs.next()) {
 				// Retrieve the correctly aliased columns
-				String equipmentSN = rs.getString("EquipmentSN");
+				String equipmentSN = rs.getString("EquipmentSerialNumber");
 				String model = rs.getString("Model");
 				String description = rs.getString("Description");
 				int numTimesRented = rs.getInt("NumTimesRented");
@@ -150,9 +150,9 @@ public class handleReportsMenu {
 	 */
 	public static void popularManufacturer(Scanner myObj, Connection connection) {
 		try {
-			String sql = "SELECT EM.Manufacturer, COUNT(R.EquipmentSN) AS TotalRentedUnits " +
+			String sql = "SELECT EM.Manufacturer, COUNT(R.EquipmentSerialNumber) AS TotalRentedUnits " +
 						"FROM Rental R, Equipment E, EquipmentModel EM " +
-						"WHERE R.EquipmentSN = E.SerialNumber " +
+						"WHERE R.EquipmentSerialNumber = E.SerialNumber " +
 						"AND E.Model = EM.Model " +
 						"GROUP BY EM.Manufacturer " +
 						"ORDER BY TotalRentedUnits DESC, EM.Manufacturer ASC " +
@@ -225,7 +225,7 @@ public class handleReportsMenu {
 	 */
 	public static void itemsCheckedOut(Connection connection) {
 		try {
-			String sql = "SELECT CustomerID, COUNT(EquipmentSN) AS TotalRentedItems " +
+			String sql = "SELECT CustomerID, COUNT(EquipmentSerialNumber) AS TotalRentedItems " +
 						"FROM Rental " +
 						"GROUP BY CustomerID " +
 						"ORDER BY TotalRentedItems DESC, CustomerID ASC " +

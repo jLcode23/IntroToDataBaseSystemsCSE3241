@@ -37,6 +37,7 @@ public class handleWarehousesMenu {
 
 			switch (choice) {
 				case 1:
+					// Add Warehouse
 					try {
 						System.out.print("Enter street address: ");
 						String street = myObj.nextLine().trim();
@@ -51,13 +52,13 @@ public class handleWarehousesMenu {
 						System.out.print("Enter drone capacity: ");
 						String droneCap = myObj.nextLine().trim();
 
-						String sql = "INSERT INTO Warehouse (StreetAddress, City, Phone, ManagerName, StorageCapacity, DroneCapacity) " +
+						String sql = "INSERT INTO Warehouse (StreetAddress, City, PhoneNumber, ManagerName, StorageCapacity, DroneCapacity) " +
                         "VALUES (?, ?, ?, ?, ?, ?)";
 
 						PreparedStatement stmt = connection.prepareStatement(sql);
 						stmt.setString(1, street);
 						stmt.setString(2, city);
-						stmt.setInt(3, Integer.parseInt(phone));
+						stmt.setString(3, phone);
 						stmt.setString(4, manager);
 						stmt.setDouble(5, Double.parseDouble(storage));
 						stmt.setDouble(6, Double.parseDouble(droneCap));
@@ -71,16 +72,14 @@ public class handleWarehousesMenu {
 					break;
 
 				case 2:
+					// Edit Warehouse
 					try {
 						System.out.print("Enter street address of warehouse to edit: ");
 						String streetEdit = myObj.nextLine().trim();
-						System.out.print("Enter city of warehouse to edit: ");
-						String cityEdit = myObj.nextLine().trim();
 
-						String sqlSelect = "SELECT * FROM Warehouse WHERE StreetAddress = ? AND City = ?";
+						String sqlSelect = "SELECT * FROM Warehouse WHERE StreetAddress = ?";
 						PreparedStatement stmt = connection.prepareStatement(sqlSelect);
 						stmt.setString(1, streetEdit);
-						stmt.setString(2, cityEdit);
 						ResultSet rs = stmt.executeQuery();
 
 						if (!rs.next()) {
@@ -92,6 +91,8 @@ public class handleWarehousesMenu {
 						rs.close();
 						stmt.close();
 
+						System.out.print("Enter new city: ");
+						String cityEdit = myObj.nextLine().trim();
 						System.out.print("Enter new phone number: ");
 						String newPhone = myObj.nextLine().trim();
 						System.out.print("Enter new manager name: ");
@@ -101,10 +102,10 @@ public class handleWarehousesMenu {
 						System.out.print("Enter new drone capacity: ");
 						String newDroneCap = myObj.nextLine().trim();
 
-						String sqlUpdate = "UPDATE Warehouse SET Phone = ?, ManagerName = ?, StorageCapacity = ?, DroneCapacity = ? " +
+						String sqlUpdate = "UPDATE Warehouse SET PhoneNumber = ?, ManagerName = ?, StorageCapacity = ?, DroneCapacity = ? " +
 								"WHERE StreetAddress = ? AND City = ?";
 						stmt = connection.prepareStatement(sqlUpdate);
-						stmt.setInt(1, Integer.parseInt(newPhone));
+						stmt.setString(1,newPhone);
 						stmt.setString(2, newManager);
 						stmt.setDouble(3, Double.parseDouble(newStorage));
 						stmt.setDouble(4, Double.parseDouble(newDroneCap));
@@ -120,16 +121,14 @@ public class handleWarehousesMenu {
 					break;
 
 				case 3:
+					// Delete Warehouse
 					try {
 						System.out.print("Enter street address of warehouse to delete: ");
 						String streetDel = myObj.nextLine().trim();
-						System.out.print("Enter city of warehouse to delete: ");
-						String cityDel = myObj.nextLine().trim();
 
-						String sqlDelete = "DELETE FROM Warehouse WHERE StreetAddress = ? AND City = ?";
+						String sqlDelete = "DELETE FROM Warehouse WHERE StreetAddress = ?";
 						PreparedStatement stmt = connection.prepareStatement(sqlDelete);
 						stmt.setString(1, streetDel);
-						stmt.setString(2, cityDel);
 
 						int rowsAffected = stmt.executeUpdate();
 						stmt.close();
@@ -144,13 +143,15 @@ public class handleWarehousesMenu {
 					break;
 
 				case 4:
+					// Search Warehouses
 					try {
-						System.out.print("Enter city to search warehouses: ");
-						String citySearch = myObj.nextLine().trim();
+						System.out.print("Enter street address of warehouse to delete: ");
+						String streetSearch = myObj.nextLine().trim();
 
-						String sqlSearch = "SELECT * FROM Warehouse WHERE City = ?";
+
+						String sqlSearch = "SELECT * FROM Warehouse WHERE StreetAddress = ?";
 						PreparedStatement stmt = connection.prepareStatement(sqlSearch);
-						stmt.setString(1, citySearch);
+						stmt.setString(1, streetSearch);
 						ResultSet rs = stmt.executeQuery();
 
 						boolean found = false;
@@ -158,7 +159,7 @@ public class handleWarehousesMenu {
 						while (rs.next()) {
 							System.out.println("Street: " + rs.getString("StreetAddress") +
 									", City: " + rs.getString("City") +
-									", Phone: " + rs.getInt("Phone") +
+									", Phone: " + rs.getInt("PhoneNumber") +
 									", Manager: " + rs.getString("ManagerName") +
 									", Storage Capacity: " + rs.getDouble("StorageCapacity") +
 									", Drone Capacity: " + rs.getDouble("DroneCapacity"));
@@ -174,6 +175,7 @@ public class handleWarehousesMenu {
 					break;
 
 				case 5:
+					// View All Warehouses
 					try {
 						String sqlView = "SELECT * FROM Warehouse";
 						PreparedStatement stmt = connection.prepareStatement(sqlView);
@@ -183,7 +185,7 @@ public class handleWarehousesMenu {
 						while (rs.next()) {
 							System.out.println("Street: " + rs.getString("StreetAddress") +
 									", City: " + rs.getString("City") +
-									", Phone: " + rs.getInt("Phone") +
+									", Phone: " + rs.getInt("PhoneNumber") +
 									", Manager: " + rs.getString("ManagerName") +
 									", Storage Capacity: " + rs.getDouble("StorageCapacity") +
 									", Drone Capacity: " + rs.getDouble("DroneCapacity"));
@@ -196,6 +198,7 @@ public class handleWarehousesMenu {
 					break;
 
 				case 6:
+					// Back to Main Menu
 					System.out.println("Returning to main menu...");
 					break;
 

@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 public class InventoryManagementSystem {
 
-	private static final String DATABASE= "company.db";
+	private static final String DATABASE= "FinalCompany.db";
 	private static Connection conn = null;
 	
 
